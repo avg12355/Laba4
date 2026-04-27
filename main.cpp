@@ -1,27 +1,23 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 
-using namespace cv;
-using namespace std;
-
 int main() {
-    Mat image = imread("input.jpg");
-    Mat gray;
-    cvtColor(image, gray, COLOR_BGR2GRAY);
-    Mat kernel = (Mat_<float>(3, 3) << 
-        -1, -1,  0,
-        -1,  0,  1,
-         0,  1,  1);
-    Mat emboss;
-    filter2D(gray, emboss, -1, kernel);
-    emboss = emboss + 128;
-    namedWindow("Original", WINDOW_AUTOSIZE);
-    namedWindow("Emboss Effect", WINDOW_AUTOSIZE);
-    imshow("Original", image);
-    imshow("Emboss Effect", emboss);
-    imwrite("emboss_result.jpg", emboss);
-    waitKey(0);
-    destroyAllWindows();
+    cv::Mat image = cv::imread("input.jpg");
+    cv::Mat gray;
+    cv::cvtColor(image, gray, cv::COLOR_BGR2GRAY);
+    cv::Mat kernel = (cv::Mat_<float>(3, 3) << 
+    -2, -1,  0,                                         
+    -1,  1,  1,
+     0,  1,  2);
+    cv::Mat result;
+    cv::filter2D(gray, result, -1, kernel);
+    result += 128;
+    cv::namedWindow("Original Image", cv::WINDOW_AUTOSIZE);
+    cv::namedWindow("Emboss Effect", cv::WINDOW_AUTOSIZE);
+    cv::imshow("Original Image", image);
+    cv::imshow("Emboss Effect", result);
+    cv::waitKey(0);
+    cv::destroyAllWindows();
 
     return 0;
 }
